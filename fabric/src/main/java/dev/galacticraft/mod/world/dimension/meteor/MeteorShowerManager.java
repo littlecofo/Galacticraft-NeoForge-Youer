@@ -75,7 +75,7 @@ public final class MeteorShowerManager {
     public static void tick(ServerLevel level) {
         Config config = Galacticraft.CONFIG;
         if (!config.meteorsEnabled()) return;
-        if (level.galacticraft$getCelestialBody() == null) return;
+        if (!isCelestialWorld(level)) return;
 
         MeteorShowerState state = MeteorShowerState.get(level);
         MeteorShowerTuning tuning = new MeteorShowerTuning(true,
@@ -96,9 +96,18 @@ public final class MeteorShowerManager {
         trySpawn(level, state, config);
     }
 
+    /** Launch aliases share navigation data but must not acquire planetary hazards. */
+    public static boolean isCelestialWorld(ServerLevel level) {
+        if (MeteorWorldSafety.isProtectedWorld(level)) return false;
+        var body = level.galacticraft$getCelestialBody();
+        if (body != null && MeteorWorldSafety.isResourceDimension(level.dimension())) return true;
+        return body != null && body.value().type() instanceof dev.galacticraft.api.universe.celestialbody.landable.Landable landable
+                && landable.world(body.value().config()).equals(level.dimension());
+    }
+
     /** Current shower intensity in {@code [0, 1]} for this level; 0 outside an active shower. */
     public static float currentIntensity(ServerLevel level) {
-        if (!Galacticraft.CONFIG.meteorsEnabled() || level.galacticraft$getCelestialBody() == null) return 0.0f;
+        if (!Galacticraft.CONFIG.meteorsEnabled() || !isCelestialWorld(level)) return 0.0f;
         return MeteorShowerState.get(level).currentIntensity();
     }
 

@@ -38,6 +38,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 public class GCBlockEntityTypes {
     public static final GCRegistry<BlockEntityType<?>> BLOCK_ENTITIES = new GCRegistry<>(BuiltInRegistries.BLOCK_ENTITY_TYPE);
     // POWER GENERATION
+    public static final BlockEntityType<GeothermalGeneratorBlockEntity> GEOTHERMAL_GENERATOR = register("geothermal_generator", GeothermalGeneratorBlockEntity::new, GCBlocks.GEOTHERMAL_GENERATOR);
+    public static final BlockEntityType<SolarArrayControllerBlockEntity> SOLAR_ARRAY_CONTROLLER = register("solar_array_controller", SolarArrayControllerBlockEntity::new, GCBlocks.SOLAR_ARRAY_CONTROLLER);
     public static final BlockEntityType<CoalGeneratorBlockEntity> COAL_GENERATOR = register(Constant.Block.COAL_GENERATOR, CoalGeneratorBlockEntity::new, GCBlocks.COAL_GENERATOR);
     public static final BlockEntityType<BasicSolarPanelBlockEntity> BASIC_SOLAR_PANEL = register(Constant.Block.BASIC_SOLAR_PANEL, BasicSolarPanelBlockEntity::new, GCBlocks.BASIC_SOLAR_PANEL);
     public static final BlockEntityType<AdvancedSolarPanelBlockEntity> ADVANCED_SOLAR_PANEL = register(Constant.Block.ADVANCED_SOLAR_PANEL, AdvancedSolarPanelBlockEntity::new, GCBlocks.ADVANCED_SOLAR_PANEL);

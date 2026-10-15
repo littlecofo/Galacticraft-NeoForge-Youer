@@ -6,12 +6,12 @@ plugins {
 }
 
 
-val localMachineLib = rootProject.file("../MachineLib/neoforge/build/libs").listFiles()
+val localMachineLib = rootProject.file("vendor/MachineLib/neoforge/build/libs").listFiles()
     ?.filter { it.name.startsWith("MachineLib-neoforge-") && it.extension == "jar" }
     ?.filterNot { it.name.contains("-sources") || it.name.contains("-javadoc") || it.name.contains("-shadow") }
     ?.maxByOrNull { it.lastModified() }
 val localDynamicDimensionsRoot = rootProject.file(
-    rootProject.findProperty("dynamicdimensions.local.path")?.toString() ?: "../DynamicDimensions"
+    rootProject.findProperty("dynamicdimensions.local.path")?.toString() ?: "vendor/DynamicDimensions"
 )
 val localDynamicDimensions = localDynamicDimensionsRoot.resolve("neoforge/build/libs").listFiles()
     ?.filter { it.name.startsWith("dynamicdimensions-neoforge-") && it.extension == "jar" }
@@ -157,6 +157,16 @@ loom {
         named("server") {
             name("NeoForge Server")
         }
+        create("stationTests") {
+            server()
+            name("Space station regression tests")
+            runDir("run-station-tests")
+            vmArg("-Dgalacticraft.stationTests=true")
+            vmArg("-Dneoforge.enableGameTest=true")
+            vmArg("-Dneoforge.gameTestServer=true")
+            vmArg("-Dneoforge.enabledGameTestNamespaces=minecraft")
+            vmArg("-Dgalacticraft.globalStats.enabled=false")
+        }
     }
 }
 
@@ -175,6 +185,11 @@ configurations["testCompileClasspath"].extendsFrom(common)
 configurations["testRuntimeClasspath"].extendsFrom(common)
 
 repositories {
+        exclusiveContent {
+            forRepository { maven { url = uri(rootProject.file("local-maven")) } }
+            filter { includeVersion("lol.bai", "badpackets", "neo-0.8.2") }
+        }
+
     mavenLocal()
     if (localMachineLib != null) {
         ivy {
@@ -194,7 +209,10 @@ repositories {
             content { includeModule("dev.galacticraft.local", "dynamicdimensions-neoforge") }
         }
     }
-    maven("https://maven.neoforged.net/releases/")
+    exclusiveContent {
+        forRepository { maven("https://maven.neoforged.net/releases/") }
+        filter { includeGroup("net.neoforged"); includeGroup("net.neoforged.fancymodloader"); includeGroup("net.neoforged.accesstransformers"); includeGroup("net.neoforged.installertools"); includeGroup("net.neoforged.jst"); includeGroup("cpw.mods") }
+    }
     maven("https://repo.terradevelopment.net/repository/maven-releases/") {
         content { includeGroup("dev.galacticraft") }
     }
@@ -272,7 +290,7 @@ tasks.processResources {
     val properties = mapOf(
         "version" to project.version,
         "minecraftVersion" to rootProject.property("minecraft.version"),
-        "neoForgeVersion" to rootProject.property("neoforge.version"),
+        "neoForgeVersion" to rootProject.property("neoforge.minimumVersion"),
         "architecturyVersion" to rootProject.property("architectury.version"),
         "machineLibVersion" to rootProject.property("machinelib.version"),
         "dynamicDimensionsVersion" to (localDynamicDimensionsVersion ?: rootProject.property("dynamicdimensions.version")),

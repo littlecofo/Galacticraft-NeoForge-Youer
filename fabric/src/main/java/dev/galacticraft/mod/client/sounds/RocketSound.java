@@ -46,6 +46,12 @@ public class RocketSound extends AbstractTickableSoundInstance {
     }
 
     @Override
+    public boolean canStartSilent() {
+        // Keep the engine loop available when the player unmutes the sound category.
+        return true;
+    }
+
+    @Override
     public void tick() {
         if (this.rocket.isAlive()) {
             if (this.rocket.getLaunchStage() == LaunchStage.IGNITED) {

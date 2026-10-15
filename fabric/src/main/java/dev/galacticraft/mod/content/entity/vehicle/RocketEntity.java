@@ -600,111 +600,28 @@ public class RocketEntity extends AdvancedVehicle implements Rocket, IgnoreShift
         this.remove(RemovalReason.KILLED);
     }
 
+    /** A single vanilla TNT source allows Bukkit and NeoForge protection hooks to veto damage. */
     private void doDefaultCrashExplosion() {
-        boolean createFire = this.level().getDefaultBreathable();
-
-        for (int i = 0; i < 4; i++) {
-            this.level().explode(
-                    this,
-                    this.damageSources().source(CRASH_LANDING),
-                    new ExplosionDamageCalculator(),
-                    this.getX() + (this.level().random.nextDouble() - 0.5 * 4),
-                    this.getY() + (this.level().random.nextDouble() * 3),
-                    this.getZ() + (this.level().random.nextDouble() - 0.5 * 4),
-                    10.0F,
-                    createFire,
-                    Level.ExplosionInteraction.TNT
-            );
-        }
+        doProtectedCrashExplosion(2.0F);
     }
 
-    /**
-     * Explosive-upgrade crash behavior:
-     * - DO NOT do default crash explosions
-     * - Use the payload block's TNT behavior so modded TNT (extending TntBlock) works
-     * - Detonate instantly (fuse 0)
-     *
-     * This supports:
-     *  - Vanilla TNT (spawns PrimedTnt in TntBlock.wasExploded)
-     *  - Modded TNT that extends TntBlock and overrides wasExploded to spawn its own primed entity
-     */
     private void doExplosivePayloadCrashInstant() {
-        RocketData data = this.getRocketData();
-        Optional<ExplosiveRocketData> explosiveRocketData = data.getUpgradeData(ExplosiveRocketData.class);
-        if (explosiveRocketData.isEmpty()) {
-            doDefaultCrashExplosion();
-            return;
-        }
+        // Never invoke arbitrary payload callbacks or replace the impact block: those operations
+        // can mutate claims outside the cancellable native explosion pipeline.
+        doProtectedCrashExplosion(3.0F);
+    }
 
-        Block payload = BuiltInRegistries.BLOCK.get(explosiveRocketData.get().explosiveBlock());
-        if (!(payload instanceof TntBlock tntBlock)) {
-            boolean createFire = this.level().getDefaultBreathable();
-            this.level().explode(
-                    this,
-                    this.damageSources().source(CRASH_LANDING),
-                    new ExplosionDamageCalculator(),
-                    this.getX(),
-                    this.getY(),
-                    this.getZ(),
-                    10.0F,
-                    createFire,
-                    Level.ExplosionInteraction.TNT
-            );
-            return;
-        }
-
-        Level level = this.level();
-        if (level.isClientSide) return;
-
-        BlockPos pos = this.blockPosition();
-
-        final double scanRadius = 10.0;
-        List<PrimedTnt> before = level.getEntitiesOfClass(
-                PrimedTnt.class,
-                this.getBoundingBox().inflate(scanRadius)
-        );
-
-        BlockState oldState = level.getBlockState(pos);
-        BlockState payloadState = tntBlock.defaultBlockState();
-        level.setBlock(pos, payloadState, Block.UPDATE_ALL);
-
+    private void doProtectedCrashExplosion(float power) {
+        if (this.level().isClientSide) return;
+        LivingEntity owner = this.getFirstPassenger() instanceof LivingEntity living ? living : null;
+        PrimedTnt source = new PrimedTnt(this.level(), this.getX(), this.getY(), this.getZ(), owner);
         try {
-            Explosion dummy = level.explode(
-                    this,
-                    pos.getX() + 0.5,
-                    pos.getY() + 0.5,
-                    pos.getZ() + 0.5,
-                    0.0F,
-                    false,
-                    Level.ExplosionInteraction.NONE
-            );
-
-            tntBlock.wasExploded(level, pos, dummy);
-
-            List<PrimedTnt> after = level.getEntitiesOfClass(
-                    PrimedTnt.class,
-                    this.getBoundingBox().inflate(scanRadius)
-            );
-
-            boolean spawned = false;
-            for (PrimedTnt primed : after) {
-                if (!before.contains(primed)) {
-                    spawned = true;
-                    primed.setFuse(0);
-                    primed.setDeltaMovement(Vec3.ZERO);
-                    primed.tick();
-                }
-            }
-
-            if (!spawned) {
-                LivingEntity igniter = (this.getFirstPassenger() instanceof LivingEntity le) ? le : null;
-                PrimedTnt primed = new PrimedTnt(level, this.getX(), this.getY(), this.getZ(), igniter);
-                primed.setFuse(0);
-                level.addFreshEntity(primed);
-                primed.tick();
-            }
+            // No entity is added/ticked, so there is exactly one immediate explosion. A genuine
+            // PrimedTnt is essential: ExplosionInteraction.TNT alone leaves a mod entity source.
+            this.level().explode(source, this.getX(), this.getY(), this.getZ(),
+                    power, false, Level.ExplosionInteraction.TNT);
         } finally {
-            level.setBlock(pos, oldState, Block.UPDATE_ALL);
+            source.discard();
         }
     }
 
@@ -756,15 +673,7 @@ public class RocketEntity extends AdvancedVehicle implements Rocket, IgnoreShift
         else this.timeSinceLaunch = 0;
 
         if (isOnFire()) {
-            for (int i = 0; i < 4; i++) {
-                level().explode(this,
-                        this.position().x + (level().random.nextDouble() - 0.5 * 4),
-                        this.position().y + (level().random.nextDouble() * 3),
-                        this.position().z + (level().random.nextDouble() - 0.5 * 4),
-                        10.0F,
-                        Level.ExplosionInteraction.TNT);
-            }
-            this.remove(RemovalReason.KILLED);
+            crashNow(this.getDeltaMovement());
             return;
         }
 
@@ -832,6 +741,13 @@ public class RocketEntity extends AdvancedVehicle implements Rocket, IgnoreShift
 
                 for (Entity entity : getPassengers()) {
                     if (entity instanceof ServerPlayer serverPlayer) {
+                        // Resolve before touching cargo. Never remove the rocket when the dynamic
+                        // registry is unavailable; the next tick can retry without losing items.
+                        var originBody = this.level().galacticraft$getCelestialBody();
+                        if (originBody == null) {
+                            this.setDeltaMovement(Vec3.ZERO);
+                            return;
+                        }
                         // The rocket menu is backed by this entity, so removing the rocket below
                         // stops it being valid and the server's own stillValid sweep fires a
                         // container-close a moment later - which would tear down the celestial map
@@ -855,7 +771,7 @@ public class RocketEntity extends AdvancedVehicle implements Rocket, IgnoreShift
                         gcPlayer.finishReturnInventory(rocket);
 
                         serverPlayer.galacticraft$openCelestialScreen(d);
-                        NetworkManager.sendToPlayer(serverPlayer, new OpenCelestialScreenPayload(this.getRocketData(), this.level().galacticraft$getCelestialBody()));
+                        NetworkManager.sendToPlayer(serverPlayer, new OpenCelestialScreenPayload(this.getRocketData(), originBody));
 
                         remove(RemovalReason.UNLOADED_WITH_PLAYER);
                         break;

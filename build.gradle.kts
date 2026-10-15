@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter
 
 plugins {
     id("architectury-plugin") version "3.4.164"
-    id("dev.architectury.loom") version "1.7.416" apply false
+    id("dev.architectury.loom") version "1.13.465" apply false
     id("com.gradleup.shadow") version "8.3.6" apply false
     id("com.diffplug.spotless") version "7.0.4" apply false
     id("org.ajoberstar.grgit") version "5.3.2"

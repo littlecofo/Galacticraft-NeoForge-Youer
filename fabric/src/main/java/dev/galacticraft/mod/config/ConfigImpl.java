@@ -76,6 +76,8 @@ public class ConfigImpl implements Config {
     private long energyStorageModuleStorageSize = 300_000;
     private long coalGeneratorEnergyProductionRate = 120; // /t
     private long solarPanelEnergyProductionRate = 44;
+    private long solarArrayMaxProductionRate = 1000;
+    private long geothermalGeneratorMaxProductionRate = 200;
     private long circuitFabricatorEnergyConsumptionRate = 20;
     private long electricCompressorEnergyConsumptionRate = 75;
     private long electricFurnaceEnergyConsumptionRate = 20;
@@ -219,6 +221,24 @@ public class ConfigImpl implements Config {
     @Override
     public long solarPanelEnergyProductionRate() {
         return solarPanelEnergyProductionRate;
+    }
+
+    @Override
+    public long geothermalGeneratorMaxProductionRate() {
+        return Math.max(0L, Math.min(100000L, geothermalGeneratorMaxProductionRate));
+    }
+
+    public void setGeothermalGeneratorMaxProductionRate(long amount) {
+        this.geothermalGeneratorMaxProductionRate = Math.max(0L, Math.min(100000L, amount));
+    }
+
+    @Override
+    public long solarArrayMaxProductionRate() {
+        return Math.max(0L, Math.min(100000L, solarArrayMaxProductionRate));
+    }
+
+    public void setSolarArrayMaxProductionRate(long amount) {
+        this.solarArrayMaxProductionRate = Math.max(0L, Math.min(100000L, amount));
     }
 
     public void setSolarPanelEnergyProductionRate(long amount) {

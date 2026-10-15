@@ -1,0 +1,649 @@
+{
+  "date": "2026-10-15",
+  "reference": {
+    "repository": "https://github.com/micdoodle8/Galacticraft",
+    "branch": "MC1.12",
+    "commit": "33af6a3803b6ccc7c5030da13bcfda6c1cec4750"
+  },
+  "modern_baseline": "ColinVaughn/Galacticraft-1.21.1 @ 42824a2208fa606fe7df5a1796241a92611e91e2 + existing Youer .10 patches",
+  "scope": "First-pass GC4 gameplay subsystem comparison, not proof of full parity; only the new restoration batch receives complete tests in this run. GC4 addons excluded.",
+  "features": [
+    {
+      "feature": "煤炭发电",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityCoalGenerator.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\CoalGeneratorBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "基础与高级太阳能",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntitySolar.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\BasicSolarPanelBlockEntity.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\AdvancedSolarPanelBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "储能与导线",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityEnergyStorageModule.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\EnergyStorageModuleBlockEntity.java",
+        "neoforge\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\networked\\WireBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "电路制造",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityCircuitFabricator.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\CircuitFabricatorBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "压缩机与电动压缩机",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityIngotCompressor.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityElectricIngotCompressor.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\CompressorBlockEntity.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\ElectricCompressorBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "电炉与电弧炉",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityElectricFurnace.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\ElectricFurnaceBlockEntity.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\ElectricArcFurnaceBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "炼油和燃料装载",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityRefinery.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityFuelLoader.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\RefineryBlockEntity.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\FuelLoaderBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "货物装载与卸载",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityCargoLoader.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityCargoUnloader.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\CargoLoaderBlockEntity.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\CargoUnloaderBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "氧气收集",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityOxygenCollector.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\OxygenCollectorBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "氧气压缩与解压",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityOxygenCompressor.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityOxygenDecompressor.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\OxygenCompressorBlockEntity.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\OxygenDecompressorBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "氧气封闭与气泡",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityOxygenSealer.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityOxygenDistributor.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\OxygenSealerBlockEntity.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\OxygenBubbleDistributorBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "氧气检测与储存",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityOxygenDetector.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityOxygenStorageModule.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\OxygenDetectorBlockEntity.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\OxygenStorageModuleBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "流体管道与储罐",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityFluidPipe.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityFluidTank.java"
+      ],
+      "port_evidence": [
+        "neoforge\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\special\\fluidpipe\\PipeBlockEntity.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\FluidTankBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "气闸",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityAirLockController.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\AirlockControllerBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "地形改造",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\mars\\tile\\TileEntityTerraformer.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\TerraformerBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "冷冻休眠",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\mars\\tile\\TileEntityCryogenicChamber.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\CryogenicChamberBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "NASA工作台和火箭",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityNasaWorkbench.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\entities\\EntityTier1Rocket.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\RocketWorkbenchBlockEntity.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\entity\\vehicle\\RocketEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "货运火箭",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\mars\\entities\\EntityCargoRocket.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\entity\\vehicle\\CargoRocketEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "自动采矿",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\asteroids\\entities\\EntityAstroMiner.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\entity\\vehicle\\AstroMinerEntity.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\AstroMinerBaseBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "月球车",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\entities\\EntityBuggy.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\item\\BuggyItem.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "降落伞和降落箱",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\items\\ItemParaChute.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\entities\\EntityParachest.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\item\\ParachuteItem.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\entity\\ParachestEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "地牢与Boss",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\entities\\EntitySkeletonBoss.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\mars\\entities\\EntityCreeperBoss.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\venus\\entities\\EntitySpiderQueen.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\entity\\boss\\SkeletonBoss.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\entity\\boss\\CreeperBoss.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\entity\\boss\\SpiderBoss.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\DungeonSpawnerBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "染色、拆解和食品罐装",
+      "status": "已有实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityPainter.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityDeconstructor.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\PainterBlockEntity.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\DeconstructorBlockEntity.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\FoodCannerBlockEntity.java"
+      ],
+      "notes": ""
+    },
+    {
+      "feature": "金星地热发电",
+      "status": "本轮恢复；NeoForge游戏测试、Youer运行和客户端资源加载通过",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\venus\\tile\\TileEntityGeothermalGenerator.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\GeothermalGeneratorBlockEntity.java"
+      ],
+      "notes": "喷气口、2至19格畅通竖井和硫酸热源；原生机器电力/充电/界面，默认峰值200，可关闭。"
+    },
+    {
+      "feature": "大型太阳能阵列",
+      "status": "本轮恢复；NeoForge游戏测试、Youer运行和客户端资源加载通过",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\venus\\tile\\TileEntitySolarArrayController.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\venus\\tile\\TileEntitySolarArrayModule.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\block\\entity\\machine\\SolarArrayControllerBlockEntity.java"
+      ],
+      "notes": "补齐控制器和模块，使用已有太阳能阵列面板/晶圆；同高度水平相连，128节点上限，一秒复查；昼夜、遮挡、天气和火星沙尘影响；现代方块模型，不是GC4 OBJ原样复刻。"
+    },
+    {
+      "feature": "月球、火星、金星和小行星目的地",
+      "status": "已有目的地和维度实现，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\dimension\\WorldProviderMoon.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\mars\\dimension\\WorldProviderMars.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\venus\\dimension\\WorldProviderVenus.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\asteroids\\dimension\\WorldProviderAsteroids.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\GCCelestialBodies.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\world\\dimension\\GCDimensions.java"
+      ],
+      "notes": "现代分支另有水星。未改任何已有维度ID、生成器或已生成正式区块。"
+    },
+    {
+      "feature": "空间站与返航存档",
+      "status": "已有实现，纳入本轮回归",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\dimension\\SpaceStationWorldData.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\impl\\universe\\celestialbody\\type\\SatelliteType.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\impl\\universe\\celestialbody\\type\\SatelliteWorldMigration.java",
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\teleporters\\StationArrivalCargo.java"
+      ],
+      "notes": "保留之前的天体唯一存档、零重力和返航货物修复。"
+    },
+    {
+      "feature": "温度防护装备",
+      "status": "已有物品及装备系统，尚未本轮全面复测",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\asteroids\\items\\ItemThermalPadding.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\venus\\items\\ItemThermalPaddingTier2.java"
+      ],
+      "port_evidence": [
+        "fabric\\src\\main\\java\\dev\\galacticraft\\mod\\content\\item\\GCItems.java"
+      ],
+      "notes": "不能仅凭名称确认GC4温度曲线、全套效果和模型完全等价；需按金星/小行星长期生存验收。"
+    },
+    {
+      "feature": "发射控制器与自动航线",
+      "status": "尚缺少对等实现",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\mars\\tile\\TileEntityLaunchController.java"
+      ],
+      "port_evidence": [],
+      "notes": "货运火箭实体已存在，GC4频率寻址、红石调度、自动往返控制器未恢复。优先核对多世界映射与落点/货物持久化。"
+    },
+    {
+      "feature": "短距离传送台",
+      "status": "尚缺少对等实现",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\asteroids\\tile\\TileEntityShortRangeTelepad.java"
+      ],
+      "port_evidence": [],
+      "notes": "涉及地址、目的地可用性、费用和Bukkit玩家传送取消；需遵守领地与AuthMe状态。"
+    },
+    {
+      "feature": "能量束接收与反射",
+      "status": "尚缺少对等实现",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\asteroids\\tile\\TileEntityBeamReceiver.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\asteroids\\tile\\TileEntityBeamReflector.java"
+      ],
+      "port_evidence": [],
+      "notes": "现有beam_core材料不等于能量束设备；恢复前测试循环、损耗、加载边界和储能守恒。"
+    },
+    {
+      "feature": "金星坠毁探测器",
+      "status": "尚缺少对等实现",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\venus\\tile\\TileEntityCrashedProbe.java"
+      ],
+      "port_evidence": [],
+      "notes": "需核对自然生成、已生成区块、稀有掉落和配方，不能强行重生成正式区块。"
+    },
+    {
+      "feature": "射电望远镜",
+      "status": "尚缺少对等实现",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityDish.java"
+      ],
+      "port_evidence": [],
+      "notes": "现有雷达不等于GC4射电望远镜。"
+    },
+    {
+      "feature": "显示屏与拼接屏",
+      "status": "尚缺少对等实现",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityScreen.java"
+      ],
+      "port_evidence": [],
+      "notes": "未找到对等设备；必须完成客户端显示而非只注册方块。"
+    },
+    {
+      "feature": "抓钩",
+      "status": "尚缺少对等实现",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\asteroids\\entities\\EntityGrapple.java",
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\asteroids\\items\\ItemGrappleHook.java"
+      ],
+      "port_evidence": [],
+      "notes": "未找到对等功能；需验证玩家位移、断线和作弊检测/领地交互。"
+    },
+    {
+      "feature": "应急氧气箱",
+      "status": "尚缺少对等实现",
+      "gc4_evidence": [
+        "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\tile\\TileEntityEmergencyBox.java"
+      ],
+      "port_evidence": [],
+      "notes": "便携EmergencyKit已经存在，但不是GC4可放置应急箱。"
+    }
+  ],
+  "gc4_registry_fields": {
+    "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\GCBlocks.java": [
+      "breatheableAir",
+      "brightAir",
+      "brightBreatheableAir",
+      "brightLamp",
+      "treasureChestTier1",
+      "landingPad",
+      "unlitTorch",
+      "unlitTorchLit",
+      "oxygenDistributor",
+      "oxygenPipe",
+      "oxygenPipePull",
+      "oxygenCollector",
+      "oxygenCompressor",
+      "oxygenSealer",
+      "oxygenDetector",
+      "nasaWorkbench",
+      "fallenMeteor",
+      "basicBlock",
+      "airLockFrame",
+      "airLockSeal",
+      "spaceGlassClear",
+      "spaceGlassVanilla",
+      "spaceGlassStrong",
+      "spaceGlassTinClear",
+      "spaceGlassTinVanilla",
+      "spaceGlassTinStrong",
+      "crafting",
+      "crudeOil",
+      "fuel",
+      "refinery",
+      "fuelLoader",
+      "landingPadFull",
+      "spaceStationBase",
+      "fakeBlock",
+      "sealableBlock",
+      "cargoLoader",
+      "parachest",
+      "solarPanel",
+      "radioTelescope",
+      "machineBase",
+      "machineBase2",
+      "machineBase3",
+      "machineTiered",
+      "aluminumWire",
+      "panelLighting",
+      "glowstoneTorch",
+      "blockMoon",
+      "cheeseBlock",
+      "spinThruster",
+      "screen",
+      "telemetry",
+      "fluidTank",
+      "bossSpawner",
+      "slabGCHalf",
+      "slabGCDouble",
+      "tinStairs1",
+      "tinStairs2",
+      "moonStoneStairs",
+      "moonBricksStairs",
+      "wallGC",
+      "concealedRedstone",
+      "concealedRepeater_Powered",
+      "concealedRepeater_Unpowered",
+      "concealedDetector",
+      "platform",
+      "emergencyBox",
+      "grating",
+      "gratingWater",
+      "gratingLava"
+    ],
+    "src\\main\\java\\micdoodle8\\mods\\galacticraft\\core\\GCItems.java": [
+      "oxTankLight",
+      "oxTankMedium",
+      "oxTankHeavy",
+      "oxMask",
+      "rocketTier1",
+      "sensorGlasses",
+      "sensorLens",
+      "steelPickaxe",
+      "steelAxe",
+      "steelHoe",
+      "steelSpade",
+      "steelSword",
+      "steelHelmet",
+      "steelChestplate",
+      "steelLeggings",
+      "steelBoots",
+      "canister",
+      "oxygenVent",
+      "oxygenFan",
+      "oxygenConcentrator",
+      "rocketEngine",
+      "heavyPlatingTier1",
+      "partNoseCone",
+      "partFins",
+      "buggy",
+      "flag",
+      "oxygenGear",
+      "parachute",
+      "canvas",
+      "flagPole",
+      "oilCanister",
+      "fuelCanister",
+      "oxygenCanisterInfinite",
+      "schematic",
+      "key",
+      "partBuggy",
+      "basicItem",
+      "foodItem",
+      "battery",
+      "infiniteBatery",
+      "meteorChunk",
+      "wrench",
+      "cheeseCurd",
+      "meteoricIronRaw",
+      "itemBasicMoon",
+      "bucketOil",
+      "bucketFuel",
+      "cheeseBlock",
+      "prelaunchChecklist",
+      "dungeonFinder",
+      "ic2compat",
+      "emergencyKit"
+    ],
+    "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\venus\\VenusBlocks.java": [
+      "venusBlock",
+      "spout",
+      "bossSpawner",
+      "treasureChestTier3",
+      "torchWeb",
+      "sulphuricAcid",
+      "geothermalGenerator",
+      "crashedProbe",
+      "scorchedRock",
+      "solarArrayModule",
+      "solarArrayController"
+    ],
+    "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\venus\\VenusItems.java": [
+      "thermalPaddingTier2",
+      "basicItem",
+      "volcanicPickaxe",
+      "key",
+      "bucketSulphuricAcid",
+      "atomicBattery"
+    ],
+    "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\mars\\blocks\\MarsBlocks.java": [
+      "marsBlock",
+      "blockSludge",
+      "vine",
+      "rock",
+      "treasureChestTier2",
+      "machine",
+      "machineT2",
+      "creeperEgg",
+      "marsCobblestoneStairs",
+      "marsBricksStairs",
+      "bossSpawner"
+    ],
+    "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\mars\\items\\MarsItems.java": [
+      "marsItemBasic",
+      "deshPickaxe",
+      "deshPickSlime",
+      "deshAxe",
+      "deshHoe",
+      "deshSpade",
+      "deshSword",
+      "deshHelmet",
+      "deshChestplate",
+      "deshLeggings",
+      "deshBoots",
+      "rocketMars",
+      "key",
+      "schematic",
+      "carbonFragments",
+      "bucketSludge"
+    ],
+    "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\asteroids\\blocks\\AsteroidBlocks.java": [
+      "blockWalkway",
+      "blockBasic",
+      "machineFrame",
+      "beamReflector",
+      "beamReceiver",
+      "shortRangeTelepad",
+      "fakeTelepad",
+      "blockDenseIce",
+      "blockMinerBase",
+      "minerBaseFull",
+      "spaceWart"
+    ],
+    "src\\main\\java\\micdoodle8\\mods\\galacticraft\\planets\\asteroids\\items\\AsteroidsItems.java": [
+      "grapple",
+      "tier3Rocket",
+      "astroMiner",
+      "thermalPadding",
+      "basicItem",
+      "methaneCanister",
+      "canisterLOX",
+      "canisterLN2",
+      "canisterLAr",
+      "atmosphericValve",
+      "heavyNoseCone",
+      "orionDrive",
+      "titaniumHelmet",
+      "titaniumChestplate",
+      "titaniumLeggings",
+      "titaniumBoots",
+      "titaniumAxe",
+      "titaniumPickaxe",
+      "titaniumSpade",
+      "titaniumHoe",
+      "titaniumSword",
+      "strangeSeed"
+    ]
+  },
+  "production": "No upload, deployment or restart. Production remains .10; keep meteor protected-world list, canonical celestial worlds, station cargo and rocket protection patches."
+}

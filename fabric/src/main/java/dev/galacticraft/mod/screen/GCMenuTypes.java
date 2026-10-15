@@ -38,6 +38,8 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.crafting.*;
 
 public class GCMenuTypes {
+    public static final MenuType<MachineMenu<SolarArrayControllerBlockEntity>> SOLAR_ARRAY_CONTROLLER = SynchronizedMenuType.createSimple(MachineMenu::new);
+    public static final MenuType<MachineMenu<GeothermalGeneratorBlockEntity>> GEOTHERMAL_GENERATOR = SynchronizedMenuType.createSimple(MachineMenu::new);
     public static final MenuType<CoalGeneratorMenu> COAL_GENERATOR = SynchronizedMenuType.create((type, id, inventory, pos) -> new CoalGeneratorMenu(id, inventory, pos));
     public static final MenuType<SolarPanelMenu<BasicSolarPanelBlockEntity>> BASIC_SOLAR_PANEL = SynchronizedMenuType.create(SolarPanelMenu::new);
     public static final MenuType<SolarPanelMenu<AdvancedSolarPanelBlockEntity>> ADVANCED_SOLAR_PANEL = SynchronizedMenuType.create(SolarPanelMenu::new);
@@ -88,6 +90,8 @@ public class GCMenuTypes {
     public static final MenuType<PowerPortMenu<CannonBlockEntity>> CANNON = SynchronizedMenuType.create(PowerPortMenu::new);
 
     public static void register() {
+        Registry.register(BuiltInRegistries.MENU, Constant.id("solar_array_controller"), SOLAR_ARRAY_CONTROLLER);
+        Registry.register(BuiltInRegistries.MENU, Constant.id("geothermal_generator"), GEOTHERMAL_GENERATOR);
         Registry.register(BuiltInRegistries.MENU, Constant.id(Constant.Menu.PLAYER_INVENTORY_MENU), PLAYER_INV_GC);
         Registry.register(BuiltInRegistries.MENU, Constant.id(Constant.Menu.PET_INVENTORY_MENU), PET_INV_GC);
 

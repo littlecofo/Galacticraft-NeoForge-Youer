@@ -202,6 +202,11 @@ public class FallingMeteorEntity extends Entity {
     }
 
     private void serverTick(ServerLevel level) {
+        if (!dev.galacticraft.mod.Galacticraft.CONFIG.meteorsEnabled()
+                || dev.galacticraft.mod.world.dimension.meteor.MeteorWorldSafety.isProtectedWorld(level)) {
+            this.discard();
+            return;
+        }
         if (this.profile == null) this.profile = AtmosphereProfile.of(level);
         MeteoroidClass type = getMeteoroidClass();
 

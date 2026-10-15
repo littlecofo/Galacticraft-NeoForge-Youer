@@ -91,7 +91,7 @@ import java.util.OptionalLong;
 
 public class SatelliteType extends CelestialBodyType<SatelliteConfig> implements Satellite<SatelliteConfig>, Tiered<SatelliteConfig> {
     public static final SatelliteType INSTANCE = new SatelliteType(SatelliteConfig.CODEC);
-    public static final float DEFAULT_GRAVITY = 1.0F;
+    public static final float DEFAULT_GRAVITY = 0.0F;
     public static final ChunkProgressListener EMPTY_PROGRESS_LISTENER = new ChunkProgressListener() {
         @Override
         public void updateSpawnPos(ChunkPos spawnPos) {

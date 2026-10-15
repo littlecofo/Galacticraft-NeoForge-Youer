@@ -1,0 +1,20 @@
+{
+  "Galacticraft-NeoForge": {
+    "upstream": "https://github.com/ColinVaughn/Galacticraft-1.21.1.git",
+    "base_commit": "42824a2208fa606fe7df5a1796241a92611e91e2",
+    "source_files": 6081,
+    "local_changes_included": true
+  },
+  "MachineLib": {
+    "upstream": "https://github.com/ColinVaughn/MachineLib.git",
+    "base_commit": "df1d0506bd71d4f6d48dbfe9ac0fd451aa35a2e0",
+    "source_files": 320,
+    "local_changes_included": true
+  },
+  "DynamicDimensions": {
+    "upstream": "https://github.com/ColinVaughn/DynamicDimensions.git",
+    "base_commit": "b4cbedfabd0663a1bb499d3e92b19ef6bf70a492",
+    "source_files": 71,
+    "local_changes_included": true
+  }
+}

@@ -54,14 +54,13 @@ public final class SatelliteWorldMigration {
     }
 
     /**
-     * Replaces the zero-gravity value written by older Galacticraft versions.
+     * Restores weightlessness to stations written by the Earth-gravity regression.
      *
-     * New stations have Earth-relative gravity, but the old value remains in
-     * {@code satellites.dat} until it is explicitly migrated.
+     * Preserve zero gravity and explicitly customized non-default values.
      *
      * @return the gravity value that should be used for the loaded satellite
      */
     public static float repairLegacyGravity(float gravity) {
-        return gravity == 0.0F ? SatelliteType.DEFAULT_GRAVITY : gravity;
+        return gravity == 1.0F ? SatelliteType.DEFAULT_GRAVITY : gravity;
     }
 }

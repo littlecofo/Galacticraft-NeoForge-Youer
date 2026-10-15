@@ -31,7 +31,7 @@ repositories {
 }
 
 val localMachineLib = listOf("libs", "devlibs")
-    .flatMap { rootProject.file("../MachineLib/common/build/$it").listFiles()?.asList().orEmpty() }
+    .flatMap { rootProject.file("vendor/MachineLib/common/build/$it").listFiles()?.asList().orEmpty() }
     .filter { it.name.startsWith("MachineLib-common-") && it.extension == "jar" }
     .filterNot { it.name.contains("-sources") || it.name.contains("-javadoc") || it.name.contains("-transformProduction") }
     .maxByOrNull { it.lastModified() }

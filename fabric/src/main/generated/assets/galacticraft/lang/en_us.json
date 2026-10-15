@@ -1520,5 +1520,9 @@
   "ui.galacticraft.traveling_to": "Traveling to: %s",
   "ui.galacticraft.treasure_chest.locked": "This chest is locked. You need a Tier %s Dungeon Key.",
   "ui.galacticraft.upgrade": "Upgrade",
-  "ui.options.cape": "Cape"
+  "ui.options.cape": "Cape",
+  "block.galacticraft.geothermal_generator": "Geothermal Generator",
+  "machine_status.galacticraft.no_geothermal_source": "No heat source: vent, clear shaft and sulfuric acid required",
+  "block.galacticraft.solar_array_module": "Solar Array Module",
+  "block.galacticraft.solar_array_controller": "Solar Array Controller"
 }

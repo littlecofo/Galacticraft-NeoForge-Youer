@@ -1,0 +1,24 @@
+{
+  "neo_game_tests_passed": 22,
+  "new_restoration_tests": 8,
+  "youer": {
+    "pass": true,
+    "failed_marker": false,
+    "exit": 0,
+    "changed_existing_config_keys": [],
+    "new_generation_limits": {
+      "geothermal_generator_max_production_rate": 200,
+      "solar_array_max_production_rate": 1000
+    }
+  },
+  "client": {
+    "resources_loaded": true,
+    "mod_present": true,
+    "mod_asset_errors": [],
+    "exit": 0
+  },
+  "jar_sha256": "2ea8d497ad712f15f79d8674d65b2d97fea4bc845091312d8c3dc8295e34622c",
+  "jar_bytes": 68647649,
+  "production_deployed": false,
+  "critical_fix_classes_byte_identical": 11
+}

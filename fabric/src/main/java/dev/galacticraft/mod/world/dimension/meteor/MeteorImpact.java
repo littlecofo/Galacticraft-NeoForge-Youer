@@ -82,6 +82,7 @@ public final class MeteorImpact {
      */
     public static void strike(ServerLevel level, Vec3 location, MeteoroidState physics, MeteoroidClass type,
                               int seed, int totalVoxels, int survivingVoxels) {
+        if (!Galacticraft.CONFIG.meteorsEnabled() || MeteorWorldSafety.isProtectedWorld(level)) return;
         double energy = physics.kineticEnergy();
         int maxRadius = Math.max(1, Galacticraft.CONFIG.meteorMaxCraterRadius());
         int radius = (int) Mth.clamp(Math.round(MeteorPhysics.craterDiameter(energy) / 2.0), 1L, maxRadius);

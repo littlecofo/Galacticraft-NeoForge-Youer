@@ -62,7 +62,13 @@ public class ParachestBlockEntity extends RandomizableContainerBlockEntity
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
         super.loadAdditional(tag, lookup);
-        inventory = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
+        // Fresh block entities start with three slots; restore the transferred cargo capacity
+        // before decoding items, otherwise all later slots disappear after a chunk reload.
+        int size = tag.contains("InventorySize") ? tag.getInt("InventorySize") : 3;
+        for (var item : tag.getList("Items", net.minecraft.nbt.Tag.TAG_COMPOUND)) {
+            size = Math.max(size, (((CompoundTag) item).getByte("Slot") & 255) + 1);
+        }
+        inventory = NonNullList.withSize(Math.max(3, Math.min(256, size)), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(tag, inventory, lookup);
         tank.readFromNBT(lookup, tag);
     }
@@ -70,6 +76,7 @@ public class ParachestBlockEntity extends RandomizableContainerBlockEntity
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
         super.saveAdditional(tag, lookup);
+        tag.putInt("InventorySize", inventory.size());
         ContainerHelper.saveAllItems(tag, inventory, lookup);
         tank.writeToNBT(lookup, tag);
     }
@@ -79,7 +86,7 @@ public class ParachestBlockEntity extends RandomizableContainerBlockEntity
     @Override protected Component getDefaultName() { return Component.translatable(GCBlocks.PARACHEST.getDescriptionId()); }
     @Override protected AbstractContainerMenu createMenu(int id, Inventory inventory) { return new ParachestMenu(id, inventory, this); }
     @Override public NonNullList<ItemStack> getItems() { return inventory; }
-    @Override public void setItems(NonNullList<ItemStack> items) { inventory = items; }
+    @Override public void setItems(NonNullList<ItemStack> items) { inventory = items; setChanged(); }
     @Override public int getContainerSize() { return inventory.size(); }
 
     @Override

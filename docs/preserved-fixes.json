@@ -1,0 +1,68 @@
+[
+  {
+    "class": "dev/galacticraft/mod/content/entity/vehicle/RocketEntity.class",
+    "unchanged": true,
+    "old_sha256": "fb154cf8b36f1da13da6691e4103c8336a914cda5663e150f74ee69bd49c4d94",
+    "new_sha256": "fb154cf8b36f1da13da6691e4103c8336a914cda5663e150f74ee69bd49c4d94"
+  },
+  {
+    "class": "dev/galacticraft/mod/content/teleporters/StationArrivalCargo.class",
+    "unchanged": true,
+    "old_sha256": "87eae9b091676a65dbba1eee8310b30c9cf5064f26a88e3dc66bc8fe6fd33434",
+    "new_sha256": "87eae9b091676a65dbba1eee8310b30c9cf5064f26a88e3dc66bc8fe6fd33434"
+  },
+  {
+    "class": "dev/galacticraft/impl/internal/VirtualLevels.class",
+    "unchanged": true,
+    "old_sha256": "2bb44fc327cfae1d3dfda14a39c6c48d5e32e9c321b6f3b6909b38f698166f80",
+    "new_sha256": "2bb44fc327cfae1d3dfda14a39c6c48d5e32e9c321b6f3b6909b38f698166f80"
+  },
+  {
+    "class": "dev/galacticraft/impl/internal/mixin/LevelCelestialBodyMixin.class",
+    "unchanged": true,
+    "old_sha256": "693c47feaaf21f7615057e24fa35985234cb21e066f7b3ebd02075b920b1ab0d",
+    "new_sha256": "693c47feaaf21f7615057e24fa35985234cb21e066f7b3ebd02075b920b1ab0d"
+  },
+  {
+    "class": "dev/galacticraft/impl/universe/celestialbody/type/SatelliteType.class",
+    "unchanged": true,
+    "old_sha256": "5519c54e353f6e16da8ad03e0117a3ea052beb555e03210b8ce12b6dfd84a328",
+    "new_sha256": "5519c54e353f6e16da8ad03e0117a3ea052beb555e03210b8ce12b6dfd84a328"
+  },
+  {
+    "class": "dev/galacticraft/impl/universe/celestialbody/type/SatelliteWorldMigration.class",
+    "unchanged": true,
+    "old_sha256": "f8aac859d5ddf5f54501155f83ee4b01dc29462575b0053f4d88dd043b3c8c08",
+    "new_sha256": "f8aac859d5ddf5f54501155f83ee4b01dc29462575b0053f4d88dd043b3c8c08"
+  },
+  {
+    "class": "dev/galacticraft/mod/world/dimension/meteor/MeteorWorldSafety.class",
+    "unchanged": true,
+    "old_sha256": "e68cb026e506eb5e848d53da8772e6ecf9a5fe51cb309e8ba086e36ceb679eed",
+    "new_sha256": "e68cb026e506eb5e848d53da8772e6ecf9a5fe51cb309e8ba086e36ceb679eed"
+  },
+  {
+    "class": "dev/galacticraft/mod/world/dimension/meteor/MeteorImpact.class",
+    "unchanged": true,
+    "old_sha256": "9d0cc3b0efed72b45d1ed8bc5197fe55560826cf28d5d5f5493e277258305d58",
+    "new_sha256": "9d0cc3b0efed72b45d1ed8bc5197fe55560826cf28d5d5f5493e277258305d58"
+  },
+  {
+    "class": "dev/galacticraft/mod/world/dimension/meteor/MeteorShowerManager.class",
+    "unchanged": true,
+    "old_sha256": "1031653eb4173b90d0ce40dd2dcaeb750a232a2e761362e76bd40aada08c99dc",
+    "new_sha256": "1031653eb4173b90d0ce40dd2dcaeb750a232a2e761362e76bd40aada08c99dc"
+  },
+  {
+    "class": "dev/galacticraft/mod/content/entity/FallingMeteorEntity.class",
+    "unchanged": true,
+    "old_sha256": "650b7cc946e85a05a7ac68333140e61975fa9d8428c1fd699b2e48cec467b262",
+    "new_sha256": "650b7cc946e85a05a7ac68333140e61975fa9d8428c1fd699b2e48cec467b262"
+  },
+  {
+    "class": "dev/galacticraft/neoforge/client/RocketEngineSounds.class",
+    "unchanged": true,
+    "old_sha256": "42667e0b6181d82ecf2fa9a4a119787076d49b42cd68ea1085b283b834578869",
+    "new_sha256": "42667e0b6181d82ecf2fa9a4a119787076d49b42cd68ea1085b283b834578869"
+  }
+]

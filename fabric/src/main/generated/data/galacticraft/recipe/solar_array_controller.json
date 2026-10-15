@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "DDD",
+    "ASA",
+    "AWA"
+  ],
+  "key": {
+    "D": {
+      "item": "galacticraft:desh_ingot"
+    },
+    "A": {
+      "tag": "c:ingots/aluminum"
+    },
+    "S": {
+      "item": "galacticraft:solar_array_wafer"
+    },
+    "W": {
+      "item": "galacticraft:heavy_aluminum_wire"
+    }
+  },
+  "result": {
+    "id": "galacticraft:solar_array_controller",
+    "count": 1
+  }
+}

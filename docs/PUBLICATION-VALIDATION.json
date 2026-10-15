@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-15",
+  "layout": "standalone fork with vendored adapted dependency sources",
+  "java": 21,
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.255",
+  "dynamic_dimensions_source_build": "passed",
+  "machine_lib_source_build": "passed",
+  "galacticraft_source_build": "passed",
+  "required_game_tests_passed": 22,
+  "game_test_failures": 0,
+  "runtime_package_crc": "passed",
+  "build_dependency_cache": "existing Gradle cache, offline Gradle resolution",
+  "github_actions": "tracked independently in the repository Actions tab",
+  "production_server_deployed": false
+}

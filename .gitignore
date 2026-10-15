@@ -229,3 +229,16 @@ synaptic-out/
 
 # Supabase CLI local state (linked project ref, cached service versions)
 supabase/.temp/
+
+# Unofficial fork: local servers, credentials, generated Maven cache and test worlds
+**/run-*/
+**/runs/
+**/world/
+**/world_*/
+**/logs/
+.env
+.env.*
+!.env.example
+local-maven/
+dist/
+publication/

@@ -27,6 +27,7 @@ import dev.galacticraft.api.registry.AddonRegistries;
 import dev.galacticraft.api.universe.celestialbody.CelestialBody;
 import dev.galacticraft.api.universe.celestialbody.landable.Landable;
 import dev.galacticraft.impl.internal.VirtualLevels;
+import dev.galacticraft.mod.content.GCCelestialBodies;
 import dev.galacticraft.impl.internal.accessor.InternalLevelBodyAccessor;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -121,7 +122,11 @@ public abstract class LevelCelestialBodyMixin implements LevelBodyAccessor, Inte
         if (celestialBodies != null && celestialBodies.size() != this.galacticraft$celestialBodyRegistrySize) {
             this.celestialBody = this.galacticraft$resolveCelestialBody();
         }
-        return this.celestialBody;
+        // Ordinary Bukkit worlds are launch locations on Earth, not additional celestial bodies.
+        // Return the registry's existing holder: destinations still use each body's one world key.
+        // Do not cache this fallback, because a newly registered station must replace it immediately.
+        return this.celestialBody != null ? this.celestialBody
+                : celestialBodies == null ? null : celestialBodies.getHolder(GCCelestialBodies.EARTH).orElse(null);
     }
 
     @Unique

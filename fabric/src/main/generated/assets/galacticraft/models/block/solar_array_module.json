@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_top",
+  "textures": {
+    "top": "galacticraft:block/solar_array_module",
+    "side": "galacticraft:block/machine_side"
+  }
+}

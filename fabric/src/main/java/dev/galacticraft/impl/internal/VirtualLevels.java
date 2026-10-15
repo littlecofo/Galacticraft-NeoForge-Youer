@@ -23,6 +23,7 @@
 package dev.galacticraft.impl.internal;
 
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
@@ -65,6 +66,11 @@ public final class VirtualLevels {
     public static @Nullable Level canonical(Level level) {
         MinecraftServer server = level.getServer();
         if (server != null) {
+            // Bukkit multiworld servers can retain two real ServerLevel instances with the
+            // same vanilla dimension key (e.g. DIM1 and world_the_end). The key lookup picks
+            // only one; it must not turn the other persistent world into a Ponder wrapper.
+            // Create's preview worlds extend Level, not ServerLevel.
+            if (level instanceof ServerLevel) return level;
             return server.getLevel(level.dimension());
         }
         Level current = clientLevel.get();

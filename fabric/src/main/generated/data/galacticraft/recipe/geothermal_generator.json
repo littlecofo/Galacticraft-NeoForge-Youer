@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "DDD",
+    "APA",
+    "AWA"
+  ],
+  "key": {
+    "D": {
+      "item": "galacticraft:desh_ingot"
+    },
+    "A": {
+      "tag": "c:ingots/aluminum"
+    },
+    "P": {
+      "item": "galacticraft:advanced_wafer"
+    },
+    "W": {
+      "item": "galacticraft:heavy_aluminum_wire"
+    }
+  },
+  "result": {
+    "id": "galacticraft:geothermal_generator",
+    "count": 1
+  }
+}

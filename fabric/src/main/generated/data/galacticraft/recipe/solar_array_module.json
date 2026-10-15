@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PPP",
+    "AAA"
+  ],
+  "key": {
+    "P": {
+      "item": "galacticraft:solar_array_panel"
+    },
+    "A": {
+      "tag": "c:ingots/aluminum"
+    }
+  },
+  "result": {
+    "id": "galacticraft:solar_array_module",
+    "count": 1
+  }
+}

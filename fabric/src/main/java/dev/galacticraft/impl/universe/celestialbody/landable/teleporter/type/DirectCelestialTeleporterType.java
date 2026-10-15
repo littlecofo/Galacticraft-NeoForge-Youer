@@ -28,6 +28,10 @@ import dev.galacticraft.impl.universe.celestialbody.landable.teleporter.config.D
 import dev.galacticraft.impl.universe.position.config.SatelliteConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import dev.galacticraft.mod.attachments.GCServerPlayer;
+import dev.galacticraft.mod.content.teleporters.StationArrivalCargo;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.levelgen.Heightmap;
 
@@ -44,7 +48,12 @@ public class DirectCelestialTeleporterType extends CelestialTeleporterType<Defau
             // Drop the player relative to this station's anchor. Private stations anchor at (0,60,0),
             // reproducing the legacy fixed drop of (10.5, 62, 3.5); shared stations use their own anchor.
             BlockPos anchor = body.config() instanceof SatelliteConfig satellite ? satellite.getStationPos() : SatelliteConfig.DEFAULT_STATION_POS;
-            entity.teleportTo(level, anchor.getX() + 10.5F, anchor.getY() + 2.0F, anchor.getZ() + 3.5F, NO_RELATIVE_MOVEMENT, 90.0F, 0.0F);
+            boolean arrived = entity.teleportTo(level, anchor.getX() + 10.5F, anchor.getY() + 2.0F, anchor.getZ() + 3.5F, NO_RELATIVE_MOVEMENT, 90.0F, 0.0F);
+            if (arrived && entity instanceof ServerPlayer player && player.serverLevel() == level) {
+                player.setDeltaMovement(Vec3.ZERO);
+                player.fallDistance = 0.0F;
+                StationArrivalCargo.deliver(level, GCServerPlayer.get(player), player.blockPosition(), level.dimension().location().toString());
+            }
             return;
         }
 

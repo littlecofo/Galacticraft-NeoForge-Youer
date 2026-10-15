@@ -48,10 +48,8 @@ import dev.galacticraft.mod.client.render.dimension.SatelliteSkyRenderer;
 import dev.galacticraft.mod.client.render.dimension.VenusSkyRenderer;
 import dev.galacticraft.mod.client.render.dimension.VenusWeatherRenderer;
 import dev.galacticraft.mod.client.sounds.GCSoundManager;
-import dev.galacticraft.mod.client.sounds.RocketSound;
 import dev.galacticraft.mod.content.entity.vehicle.RocketEntity;
-import dev.galacticraft.mod.events.RocketEvents;
-import dev.galacticraft.api.rocket.LaunchStage;
+import dev.galacticraft.neoforge.client.RocketEngineSounds;
 import dev.galacticraft.machinelib.client.api.event.MachineStatusEvents;
 import dev.galacticraft.mod.client.model.GCModelLoader;
 import dev.galacticraft.mod.client.model.GCRenderTypes;
@@ -134,6 +132,9 @@ import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 
 /** Native NeoForge client registrations replacing Fabric client entrypoints. */
 public final class GCNeoForgeClient {
+    // Reloaded atlases supply new sprites, so colors cannot outlive their texture data.
+    private static final java.util.Map<net.minecraft.client.renderer.texture.TextureAtlasSprite, Integer>
+            CANISTER_SPRITE_COLORS = new java.util.WeakHashMap<>();
     public static void init(IEventBus modBus) {
         GCApiClientPacketReceivers.register();
         GCClientPacketReceiver.register();
@@ -166,7 +167,6 @@ public final class GCNeoForgeClient {
         CapesLoader.loadAsync();
         InventoryTabRegistry.INSTANCE.register(GCItems.OXYGEN_MASK.getDefaultInstance(), () -> NetworkManager.sendToServer(new OpenGcInventoryPayload()), GCPlayerInventoryMenu.class);
         InventoryTabRegistry.INSTANCE.register(GCItems.ROCKET.getDefaultInstance(), () -> NetworkManager.sendToServer(new OpenRocketPayload()), player -> player.getVehicle() instanceof RocketEntity, RocketMenu.class);
-        RocketEvents.STAGE_CHANGED.register(GCNeoForgeClient::onRocketStageChanged);
         MachineStatusEvents.MACHINE_STATUS_CHANGED.register(GCSoundManager::onStatusChanged);
     }
 
@@ -274,6 +274,16 @@ public final class GCNeoForgeClient {
             if (tint != -1 && tint != 0xFFFFFFFF) return tint;
             if (data.variant().fluid().isSame(Gases.METHANE)) return 0xFF80FFFF;
             if (data.variant().fluid().isSame(GCFluids.LIQUID_OXYGEN)) return 0xFFD76453;
+            var texture = IClientFluidTypeExtensions.of(data.variant().fluid()).getStillTexture();
+            if (texture != null) {
+                var sprite = Minecraft.getInstance().getTextureAtlas(
+                        net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS).apply(texture);
+                if (!sprite.contents().name().equals(
+                        net.minecraft.client.renderer.texture.MissingTextureAtlasSprite.getLocation())) {
+                    return CANISTER_SPRITE_COLORS.computeIfAbsent(sprite, image ->
+                            FastColor.ARGB32.opaque(dev.galacticraft.mod.util.TextureUtils.calculateAverageColor(image)));
+                }
+            }
             return tint;
         }, GCItems.FLUID_CANISTER);
     }
@@ -304,6 +314,7 @@ public final class GCNeoForgeClient {
     }
 
     private static void onClientTick(ClientTickEvent.Post event) {
+        RocketEngineSounds.tick(Minecraft.getInstance());
         GCKeyBinds.handleKeybinds(Minecraft.getInstance());
         OxygenOverlay.clientTick();
         LanderOverlay.clientTick();
@@ -328,14 +339,6 @@ public final class GCNeoForgeClient {
         CountdownOverlay.renderCountdown(event.getGuiGraphics(), event.getPartialTick());
     }
 
-    private static void onRocketStageChanged(dev.galacticraft.api.rocket.entity.Rocket rocket, LaunchStage oldStage) {
-        if (!(rocket instanceof RocketEntity entity)) return;
-        LaunchStage stage = entity.getLaunchStage();
-        if (stage == LaunchStage.IGNITED || (stage == LaunchStage.LAUNCHED && oldStage == LaunchStage.IDLE)) {
-            Minecraft.getInstance().getSoundManager().play(new RocketSound(entity));
-        }
-    }
-
     private static void registerReloadListeners(RegisterClientReloadListenersEvent event) {
         event.registerReloadListener(GCNeoModelReloadListener.INSTANCE);
     }
@@ -344,6 +347,8 @@ public final class GCNeoForgeClient {
         event.register(GCMenuTypes.BASIC_SOLAR_PANEL, BasicSolarPanelScreen::new);
         event.register(GCMenuTypes.ADVANCED_SOLAR_PANEL, AdvancedSolarPanelScreen::new);
         event.register(GCMenuTypes.COAL_GENERATOR, CoalGeneratorScreen::new);
+        event.register(GCMenuTypes.SOLAR_ARRAY_CONTROLLER, dev.galacticraft.mod.client.gui.screen.ingame.SolarArrayControllerScreen::new);
+        event.register(GCMenuTypes.GEOTHERMAL_GENERATOR, dev.galacticraft.mod.client.gui.screen.ingame.GeothermalGeneratorScreen::new);
         event.register(GCMenuTypes.CIRCUIT_FABRICATOR, CircuitFabricatorScreen::new);
         event.register(GCMenuTypes.REFINERY, RefineryScreen::new);
         event.register(GCMenuTypes.ELECTRIC_FURNACE, ElectricFurnaceScreen::new);

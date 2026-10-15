@@ -1478,5 +1478,9 @@
   "ui.galacticraft.traveling_to": "前往：%s",
   "ui.galacticraft.treasure_chest.locked": "此宝箱已上锁。你需要一把%s级地牢钥匙。",
   "ui.galacticraft.upgrade": "升级",
-  "ui.options.cape": "披风"
+  "ui.options.cape": "披风",
+  "block.galacticraft.geothermal_generator": "地热发电机",
+  "machine_status.galacticraft.no_geothermal_source": "无有效地热源：需要喷气口、畅通竖井和硫酸",
+  "block.galacticraft.solar_array_module": "太阳能阵列模块",
+  "block.galacticraft.solar_array_controller": "太阳能阵列控制器"
 }

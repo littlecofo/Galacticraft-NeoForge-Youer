@@ -9,12 +9,12 @@ val runJei = project.findProperty("jei")?.toString()?.toBoolean() ?: false
 val runEmi = project.findProperty("emi")?.toString()?.toBoolean() ?: false
 val runRei = project.findProperty("rei")?.toString()?.toBoolean() ?: (!runJei && !runEmi)
 val runAstrocraft = project.findProperty("astrocraft")?.toString()?.toBoolean() ?: true
-val localMachineLib = rootProject.file("../MachineLib/fabric/build/libs").listFiles()
+val localMachineLib = rootProject.file("vendor/MachineLib/fabric/build/libs").listFiles()
     ?.filter { it.name.startsWith("MachineLib-fabric-") && it.extension == "jar" }
     ?.filterNot { it.name.contains("-sources") || it.name.contains("-javadoc") || it.name.contains("-shadow") }
     ?.maxByOrNull { it.lastModified() }
 val localDynamicDimensionsRoot = rootProject.file(
-    rootProject.findProperty("dynamicdimensions.local.path")?.toString() ?: "../DynamicDimensions"
+    rootProject.findProperty("dynamicdimensions.local.path")?.toString() ?: "vendor/DynamicDimensions"
 )
 val localDynamicDimensions = localDynamicDimensionsRoot.resolve("fabric/build/libs").listFiles()
     ?.filter { it.name.startsWith("dynamicdimensions-fabric-") && it.extension == "jar" }

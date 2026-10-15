@@ -5,6 +5,9 @@
     "galacticraft:asteroid_silicon_ore",
     "galacticraft:fallen_meteor",
     "galacticraft:lunar_sapphire_ore",
-    "galacticraft:silicon_block"
+    "galacticraft:silicon_block",
+    "galacticraft:geothermal_generator",
+    "galacticraft:solar_array_module",
+    "galacticraft:solar_array_controller"
   ]
 }

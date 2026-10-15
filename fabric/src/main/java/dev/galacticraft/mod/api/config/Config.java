@@ -44,6 +44,10 @@ public interface Config {
 
     long solarPanelEnergyProductionRate();
 
+    long solarArrayMaxProductionRate();
+
+    long geothermalGeneratorMaxProductionRate();
+
     long circuitFabricatorEnergyConsumptionRate();
 
     long electricCompressorEnergyConsumptionRate();

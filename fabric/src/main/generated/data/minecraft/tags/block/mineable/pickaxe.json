@@ -191,6 +191,9 @@
     "galacticraft:mercury_surface_rock",
     "galacticraft:mercury_sub_surface_rock",
     "galacticraft:mercury_stone",
-    "galacticraft:mercury_scarp_rock"
+    "galacticraft:mercury_scarp_rock",
+    "galacticraft:geothermal_generator",
+    "galacticraft:solar_array_module",
+    "galacticraft:solar_array_controller"
   ]
 }

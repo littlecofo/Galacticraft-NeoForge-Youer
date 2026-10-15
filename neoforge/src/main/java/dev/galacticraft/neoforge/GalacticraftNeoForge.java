@@ -119,6 +119,17 @@ import net.minecraft.world.level.storage.LevelResource;
 @Mod(GalacticraftCommon.MOD_ID)
 public final class GalacticraftNeoForge {
     public GalacticraftNeoForge(IEventBus modBus, ModContainer container) {
+        if (Boolean.getBoolean("galacticraft.restorationTests")) {
+            NeoForge.EVENT_BUS.addListener(dev.galacticraft.neoforge.gametest.GC4YouerSmokeTests::started);
+            NeoForge.EVENT_BUS.addListener(dev.galacticraft.neoforge.gametest.GC4YouerSmokeTests::tick);
+        }
+        if (Boolean.getBoolean("galacticraft.stationTests")) {
+            modBus.addListener((net.neoforged.neoforge.event.RegisterGameTestsEvent event) ->
+                    {
+                        event.register(dev.galacticraft.neoforge.gametest.StationArrivalTests.class);
+                        event.register(dev.galacticraft.neoforge.gametest.GC4RestorationTests.class);
+                    });
+        }
         GcApiEntityAttributes.register(modBus);
         BuiltInAddonRegistries.register(modBus);
         BuiltInRocketRegistries.register(modBus);

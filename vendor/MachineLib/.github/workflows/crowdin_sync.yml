@@ -1,0 +1,39 @@
+name: Crowdin Translation Sync
+
+on: workflow_dispatch
+
+jobs:
+  crowdin_sync:
+    runs-on: ubuntu-24.04
+    if: github.ref_name == github.event.repository.default_branch
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Copy translations
+        run: |
+          mkdir tmp
+          cp common/src/main/resources/assets/machinelib/lang/en_us.json tmp/machinelib.json
+
+      - name: Crowdin Sync
+        uses: crowdin/github-action@v2
+        with:
+          upload_sources: false
+          upload_translations: false
+          download_translations: true
+          skip_untranslated_strings: true
+
+          localization_branch_name: 'feat/lang/service'
+
+          create_pull_request: true
+          pull_request_title: 'feat: updated translations from crowdin'
+          pull_request_labels: 'priority: low, status: ready for review, type: translation'
+          pull_request_base_branch_name: '${{ github.event.repository.default_branch }}'
+
+          source: 'tmp/machinelib.json'
+          translation: 'common/src/main/resources/assets/machinelib/lang/%locale_with_underscore%.json'
+          project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
+          token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          base_url: ${{ secrets.CROWDIN_BASE_URL }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

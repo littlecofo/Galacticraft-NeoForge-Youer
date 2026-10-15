@@ -1,40 +1,47 @@
-# NeoForge / Youer adaptation notes
+# 适配与自定义 / Port notes and customization
 
-This is a gradual adaptation, not complete GC4 feature parity.
+此分支当前服务于幻影服务器，尚未恢复全部 GC4 内容。可按自己的服务器修改配置或源码。
 
-## Restored energy devices
+This fork currently targets the Phantom server. GC4 feature parity is incomplete. Configuration and source can be adapted to your own server.
 
-- `galacticraft:geothermal_generator`: place above a vapor spout, with a clear air shaft to sulfuric acid 2–19 blocks beneath the generator. Default fluctuating output is approximately 30–200 native energy units per tick. Lava and water do not substitute for acid.
-- `galacticraft:solar_array_controller` and `galacticraft:solar_array_module`: same-height horizontal connections, one elected output controller per array, a 128-node bound and one-second rescans. Daylight, shade, weather and Martian dust storms affect output. GC4's original OBJ appearance and all planetary solar multipliers are not fully recreated.
+## 世界规则 / World rules
 
-Both generators charge native batteries and default to an energy output on the back face.
-Native machine menus support side configuration, security and redstone controls.
+陨石规则位于 [`MeteorWorldSafety.java`](../fabric/src/main/java/dev/galacticraft/mod/world/dimension/meteor/MeteorWorldSafety.java)：主世界及 `world`、`sc`、`sc2` 禁止实体陨石；`zysj`、`zysj2` 被识别为资源世界。这些名称是幻影服务器的约定，修改后需重新构建。
 
-`config/galacticraft.json` adds `geothermal_generator_max_production_rate` (200) and
-`solar_array_max_production_rate` (1000). Zero disables the respective generation;
-values are clamped to 0–100000. Existing settings are retained on load.
+Meteor rules live in [`MeteorWorldSafety.java`](../fabric/src/main/java/dev/galacticraft/mod/world/dimension/meteor/MeteorWorldSafety.java): physical meteors are blocked in the Overworld and `world`, `sc`, `sc2`; `zysj` and `zysj2` are recognized as resource worlds. These names follow Phantom's setup. Rebuild after changing them.
 
-## Server-specific boundaries
+## 发电设备 / Energy devices
 
-The inherited deployment-specific meteor exclusions for `world`, `sc` and `sc2` remain.
-Server owners must review these policies for their own world naming conventions.
-Canonical celestial-world mapping, station migration/cargo and rocket protection fixes
-remain in this branch. These policies are intentionally documented rather than silently
-claiming universal server compatibility.
+| 设备 / Device | 使用方式 / Behavior |
+| --- | --- |
+| 地热发电机 / Geothermal generator | 放在喷气孔上方，下方 2–19 格内须有硫酸，竖井保持通畅；默认输出约 30–200/t。岩浆和水不可替代。 / Place above a vapor spout with a clear shaft to sulfuric acid 2–19 blocks below; default output fluctuates around 30–200/t. Lava and water do not work. |
+| 太阳能阵列 / Solar array | 同高度水平连接模块与控制器；每组阵列选出一个输出控制器，每秒扫描一次，上限 128 个节点。光照、遮挡、天气与火星沙尘暴影响发电。 / Connect modules and controllers horizontally at the same height. Each array elects one output controller and scans once per second, up to 128 nodes. Light, shade, weather and Martian dust storms affect output. |
 
-Existing automatic mining and terraforming need dedicated territory-permission testing.
-Future telepad or autopilot ports must honor Bukkit cancellation and actual destination
-world identity. No GC4 numeric-dimension-ID compatibility is promised.
+两种设备均可为原生电池充电，默认从背面输出能量；支持侧面配置、权限和红石控制。新增设备不会主动强制加载邻接区块。
 
-## Validation scope
+Both devices charge native batteries and output energy from the back by default. Side configuration, security and redstone controls are supported. New devices do not force-load neighboring chunks.
 
-The recorded local candidate passed 22 NeoForge GameTests, an isolated Youer runtime
-check, unchanged-existing-config checks and client resource loading. There has not been
-complete human multiplayer acceptance of every boss, village, machine screen or long-term
-progression path. The public source layout additionally vendors the adapted dependency
-sources and changes their build paths. That independent publication layout was then
-successfully built locally, including both vendored dependency projects, and passed all
-22 GameTests again. See `PUBLICATION-VALIDATION.json`; this is separate from future CI results.
+在 `config/galacticraft.json` 调整以下参数，范围为 `0–100000`，`0` 表示关闭对应发电：
 
-`galacticraft.stationTests` and `galacticraft.restorationTests` are opt-in development
-switches. Runtime packaging omits their test classes. Never set them on a live server.
+Adjust these keys in `config/galacticraft.json`. Values range from `0–100000`; `0` disables the respective generation:
+
+| 参数 / Key | 默认值 / Default |
+| --- | --- |
+| `geothermal_generator_max_production_rate` | `200` |
+| `solar_array_max_production_rate` | `1000` |
+
+## 验证范围 / Validation
+
+公开源码目录已独立构建，并通过全部 22 项游戏测试。另有本地 Youer 发电、充电、配置保留与客户端资源加载检查。完整联机流程、长期存档及所有 Boss 尚未逐项验收；太阳能阵列也未完全复刻 GC4 外观及所有行星倍率。
+
+The published source layout builds independently and passes all 22 game tests. Additional local checks cover Youer generation, charging, config preservation and client resource loading. Full multiplayer progression, long-term saves and every boss have not been individually accepted; the solar array does not yet reproduce all GC4 visuals or planetary multipliers.
+
+开发测试命令 / Development test command:
+
+```powershell
+./build-neoforge.ps1 -Project Galacticraft -Tasks ':neoforge:runStationTests'
+```
+
+`galacticraft.stationTests` 与 `galacticraft.restorationTests` 仅用于开发测试；正式服不应启用。运行包已剔除测试类。
+
+`galacticraft.stationTests` and `galacticraft.restorationTests` are development-only switches. Leave them off on live servers. Runtime packages omit test classes.
